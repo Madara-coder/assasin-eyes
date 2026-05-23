@@ -577,19 +577,6 @@ cd wifi-radar/backend && python3 ../tests/smoke_test.py
 
 ---
 
-## Phase Roadmap
-
-| Phase | Status | Description |
-|---|---|---|
-| 1 | Done | Architecture design & file structure |
-| 2 | Done | Backend: FastAPI, filters, detector, mock scanner |
-| 3 | Done | Frontend: Vite scaffold, WebSocket hook, SignalChart, MotionAlert |
-| 4 | Done | Frontend: VarianceGauge, MetricsPanel, CalibrationPanel, full grid layout |
-| 5 | Done | Real Scapy beacon scanner, ping scanner, monitor-mode helper scripts |
-| 6 | **Done** | Smoke tests, threshold tuning utility, Nginx config, systemd service |
-
----
-
 ## License
 
-MIT
+MIT Built by Debrath Sharma
