@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Prevent the outer body from flashing white before React mounts */
+html, body, #root {
+  background-color: #030712; /* gray-950 */
+  color: #f9fafb;             /* gray-50 */
+  min-height: 100vh;
+}

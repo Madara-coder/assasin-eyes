@@ -1,0 +1,46 @@
+# systemd unit file for the Assassin Eyes backend.
+#
+# Install:
+#   sudo cp deploy/assassin-eyes.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now assassin-eyes
+#
+# Logs:
+#   journalctl -u assassin-eyes -f
+#
+# NOTE: The beacon scanner (SCANNER_MODE = "beacon") requires raw socket
+# access. Either run as root (User=root below) or grant the Python binary
+# the cap_net_raw+ep capability:
+#   sudo setcap cap_net_raw,cap_net_admin+eip /opt/wifi-radar/backend/.venv/bin/python3
+
+[Unit]
+Description=Assassin Eyes — Wi-Fi RSSI Motion Detector Backend
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+
+# ── Change these to match your deployment paths ───────────────────────────────
+User=root
+WorkingDirectory=/opt/wifi-radar/backend
+ExecStart=/opt/wifi-radar/backend/.venv/bin/uvicorn main:app \
+            --host 0.0.0.0 \
+            --port 8000 \
+            --workers 1 \
+            --log-level info
+
+# Restart automatically if the process crashes.
+Restart=on-failure
+RestartSec=5s
+
+# Pipe stdout/stderr to journald.
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=assassin-eyes
+
+# Give the process up to 10 s to start before systemd considers it failed.
+TimeoutStartSec=10
+
+[Install]
+WantedBy=multi-user.target
